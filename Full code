@@ -1,0 +1,134 @@
+class Bank:
+   
+    bankname = "Kochi Express Bank"
+    branch = "Angamaly south, Ernakulam, Kerala 683572"
+    accountnum = 110010
+    accounts = {}  # Dictionary to store accounts
+
+    def __init__(self, username, mobile, pin):     
+        self.username = username
+        self.mobile = mobile
+        self.pin = pin
+        self.balance = 100
+        self.account_number = Bank.accountnum
+        Bank.accountnum += 1
+
+        Bank.accounts[self.mobile] = self  # Save account using mobile number as key
+        print(f"Congratulations {self.username}. Your account ({self.account_number}) is created successfully. Initial bank balance of 100 rupees is added as an offer.")
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"{amount} rupees deposited successfully into account {self.account_number}")
+            print("Current balance:", self.balance)
+        else:
+            print("Invalid transaction")
+
+    def withdraw(self, amount):
+        if amount > 0 and amount <= self.balance:
+            self.balance -= amount
+            print(f"{amount} is withdrawn from account {self.account_number}")
+            print("Current balance:", self.balance)
+        else:
+            print("Insufficient balance to withdraw")
+
+    def mini_statement(self):
+        print(f"Mini statement\n\nAccount holder: {self.username}\nRegistered mobile number: {self.mobile}\nAccount Number: {self.account_number}\nAccount Balance: {self.balance}")
+
+    def login(self, mobile, pin):
+        if mobile in Bank.accounts:
+            account = Bank.accounts[mobile]
+            if account.pin == pin:
+                print("Login successful!")
+                print("Current balance:", account.balance)
+                return True
+            else:
+                print("Incorrect PIN. Please try again.")
+                return False
+        else:
+            print("Account not found. Please try again.")
+            return False
+
+    def transfer(self, recipient_mobile, amount):
+        if recipient_mobile in Bank.accounts:
+            recipient = Bank.accounts[recipient_mobile]
+            if amount > 0 and amount <= self.balance:
+                self.balance -= amount
+                recipient.balance += amount
+                print(f"{amount} rupees transferred successfully to account {recipient.account_number}")
+                print("Current balance after transfer:", self.balance)
+            else:
+                print("Invalid transfer amount or insufficient balance to transfer")
+        else:
+            print("Recipient account not found")
+
+# Main program
+print("\033[1;31mWELCOME TO KOCHI EXPRESS BANK !!! \033[0m")
+print("\033[1;32m")  # bold green text
+print("\033[4m")  # underlined text
+print("""%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        KOCHI EXPRESS BANK
+    'Grow your wealth with Kochi Express Bank'
+            ***24/7 customer support***
+Current offer: Open a new account and receive 100 rupees to your balance
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%""")
+print("\033[0m")
+
+b = None  # Initialize variable to hold the bank instance
+
+while True:
+    print("\nPlease select the required service from below options:")
+    print("1) Create new account\n2) Log in to existing account\n3) Deposit\n4) Withdraw\n5) Transfer\n6) Mini Statement\n7) Exit")
+
+    option = input("Option: ")
+
+    if option == "1":
+        username = input("Enter the account holder name: ")
+        mobile = input("Enter the mobile number to register and link to your bank account: ")
+        while len(mobile) != 10 or not mobile.isdigit():
+            print("Invalid mobile number. Please enter a 10-digit number.")
+            mobile = input("Enter the mobile number: ")
+        pin = input("Enter your four-digit secret pin: ")
+        while len(pin) != 4 or not pin.isdigit():
+            print("Invalid PIN. Please enter a four-digit number.")
+            pin = input("Enter your PIN: ")
+        b = Bank(username, mobile, pin)
+    elif option == "2":
+        mobile = input("Enter your mobile number: ")
+        pin = input("Enter your PIN: ")
+        if b is not None:
+            if b.login(mobile, pin):
+                pass
+            else:
+                print("Invalid mobile number or PIN. Please try again.")
+        else:
+            print("Please create an account first.")
+    elif option == "3":
+        if b is not None:
+            amount = float(input("Enter the amount to deposit: "))
+            b.deposit(amount)
+        else:
+            print("Please create an account first.")
+    elif option == "4":
+        if b is not None:
+            amount = float(input("Enter the amount to withdraw: "))
+            b.withdraw(amount)
+        else:
+            print("Please create an account first.")
+    elif option == "5":
+        if b is not None:
+            recipient_mobile = input("Enter the recipient's mobile number: ")
+            amount = float(input("Enter the amount to transfer: "))
+            b.transfer(recipient_mobile, amount)
+        else:
+            print("Please create an account first.")
+    elif option == "6":
+        if b is not None:
+            b.mini_statement()
+        else:
+            print("Please create an account first.")
+    elif option == "7":
+        print("Thanks for using Kochi Express Bank. Visit again!")
+        break
+    else:
+        print("Invalid option. Please select a valid option.")
