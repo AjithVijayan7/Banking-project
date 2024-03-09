@@ -11,7 +11,11 @@ Functionalities for Users:
 
 1)Create New Account: As a new customer, you can create a new bank account by providing your name, mobile number, and PIN. Upon successful account creation, you 
                        receive an initial deposit of 100 rupees.
+
+
 2)Log In: Existing customers can log in to their accounts by entering their mobile number and PIN. Once logged in, they can perform various banking operations.
+
+
 3)Deposit Money: Customers can deposit money into their accounts by specifying the amount they want to deposit.
 4)Withdraw Money: Customers can withdraw money from their accounts by specifying the amount they want to withdraw, provided they have sufficient funds.
 5)Transfer Money: Customers can transfer money from their account to another account by entering the recipient's mobile number and the amount to be transferred.
