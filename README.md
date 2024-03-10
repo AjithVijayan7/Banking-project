@@ -2,6 +2,10 @@
 
 Created by Ajith_vijayanD25
 
+Video presentation in google drive:
+
+https://drive.google.com/file/d/1lrH9XRM-io4TJnnKpcRKu4GD3Ge5TXLy/view?usp=sharing
+
 Title: Kochi Express Bank - Banking System Simulation
 
 Synopsis:
